@@ -1,0 +1,62 @@
+package org.example;
+
+import java.util.Scanner;
+
+public class ConnoteNumber {
+
+    public static void main(String[] args) {
+
+        String prefix = "FMCC";
+
+        Scanner scanner= new Scanner(System.in);
+        System.out.println("Enter Carrier name:");
+        String carrierName = scanner.nextLine();
+
+        System.out.println("Enter Account Number like (123ABC) :");
+        String accountNumber = scanner.nextLine();
+
+        System.out.println("Enter Last used Index (range starting from 19000 to 20000) :");
+        int index = scanner.nextInt();
+        int n = getSum(index);
+        int newIndex = index + 1;
+        String value = String.valueOf(newIndex);
+        String padded ="0000000000".substring(value.length())+value;
+
+        System.out.println("generated Consignment Number is: "+prefix+accountNumber+padded+n);
+
+    }
+    static int reverse(int n)
+    {
+        int rev =0;
+        while(n!=0){
+            rev = (rev*10)+(n%10);
+            n/=10;
+
+        }
+        return rev;
+    }
+
+    static int getSum(int n)
+    {
+        n = reverse(n);
+        int sumOdd = 0, sumEven = 0, c = 1;
+
+        while (n != 0) {
+
+            // If c is even number then it means
+            // digit extracted is at even place
+            if (c % 2 == 0)
+                sumEven += n % 10;
+            else
+                sumOdd += n % 10;
+            n /= 10;
+            c++;
+        }
+        int resultOfOdd =sumOdd *3;
+        int resultOfEven = sumEven*7;
+        int total = resultOfOdd+resultOfEven;
+        int diff = 100-total;
+        return diff;
+    }
+
+}
